@@ -3,8 +3,13 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import 'components/header.dart';
+import 'components/sidebar.dart';
+import 'constants/theme.dart';
 import 'pages/about.dart';
+import 'pages/brands.dart';
+import 'pages/categories.dart';
 import 'pages/home.dart';
+import 'pages/product.dart';
 
 // The main component of your application.
 //
@@ -16,13 +21,25 @@ class App extends StatelessComponent {
   @override
   Component build(BuildContext context) {
     // This method is rerun every time the component is rebuilt.
-    
+
     // Renders a <div class="main"> html element with children.
     return div(classes: 'main', [
       const Header(),
-      Router(routes: [
-        Route(path: '/', title: 'Home', builder: (context, state) => const Home()),
-        Route(path: '/about', title: 'About', builder: (context, state) => const About()),
+      div(classes: 'content', [
+        const Sidebar(),
+        Router(
+          routes: [
+            Route(path: '/', title: '首页', builder: (context, state) => const Home()),
+            Route(path: '/categories', title: '分类', builder: (context, state) => const Categories()),
+            Route(path: '/brands', title: '品牌', builder: (context, state) => const Brands()),
+            Route(
+              path: '/product/:id',
+              title: '商品详情',
+              builder: (context, state) => ProductPage(productId: state.params['id']!),
+            ),
+            Route(path: '/about', title: '关于', builder: (context, state) => const About()),
+          ],
+        ),
       ]),
     ]);
   }
@@ -34,12 +51,15 @@ class App extends StatelessComponent {
   @css
   static List<StyleRule> get styles => [
     css('.main', [
-      // The '&' refers to the parent selector of a nested style rules.
       css('&').styles(
         display: .flex,
-        height: 100.vh,
+        minHeight: 100.vh,
         flexDirection: .column,
-        flexWrap: .wrap,
+        backgroundColor: backgroundColor,
+      ),
+      css('.content').styles(
+        display: .flex,
+        flex: Flex(grow: 1),
       ),
       css('section').styles(
         display: .flex,
@@ -47,7 +67,21 @@ class App extends StatelessComponent {
         justifyContent: .center,
         alignItems: .center,
         flex: Flex(grow: 1),
+        padding: .all(2.em),
       ),
+      // Responsive design
+      css('@media (max-width: 768px)', [
+        css('.content').styles(
+          flexDirection: .column,
+        ),
+        css('aside').styles(
+          width: 100.percent,
+          height: .auto,
+        ),
+        css('section').styles(
+          padding: .all(1.em),
+        ),
+      ]),
     ]),
   ];
 }
