@@ -7,8 +7,8 @@
 import 'package:jaspr/server.dart';
 import 'package:my_app/components/counter.dart' as _counter;
 import 'package:my_app/components/header.dart' as _header;
-import 'package:my_app/components/product_card.dart' as _product_card;
 import 'package:my_app/components/sidebar.dart' as _sidebar;
+import 'package:my_app/components/product_card.dart' as _product_card;
 import 'package:my_app/pages/about.dart' as _about;
 import 'package:my_app/pages/brands.dart' as _brands;
 import 'package:my_app/pages/categories.dart' as _categories;
@@ -49,8 +49,8 @@ ServerOptions get defaultServerOptions => ServerOptions(
   styles: () => [
     ..._counter.CounterState.styles,
     ..._header.Header.styles,
-    ..._product_card.ProductCard.styles,
     ..._sidebar.Sidebar.styles,
+    ..._product_card.ProductCard.styles,
     ..._about.About.styles,
     ..._home.HomeState.styles,
     ..._product.ProductPage.styles,
